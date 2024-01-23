@@ -196,6 +196,7 @@ public class InstituionsController extends HttpServlet {
 			HttpSession session = request.getSession() ;
 			session.setMaxInactiveInterval(60 * 60 * 60);
 			session.setAttribute("user", institutionToLogin);
+			System.out.print("hello");
 	        response.sendRedirect(request.getContextPath()+"/Hospital/acceuil.jsp") ; 
 		}else {
             String errorMessage = "email - mot de passe incorrect";

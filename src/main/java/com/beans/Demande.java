@@ -6,6 +6,8 @@ public class Demande {
     private int nbrPochettesDemandes;
     private int nbrPochettesConfirmes;
     private String groupeSang;
+    private Institution centre ; 
+    private Institution hospital ; 
     
     
     public Demande() {
@@ -49,4 +51,20 @@ public class Demande {
     public void setGroupeSang(String groupeSang) {
         this.groupeSang = groupeSang;
     }
+
+	public Institution getCentre() {
+		return centre;
+	}
+
+	public void setCentre(Institution centre) {
+		this.centre = centre;
+	}
+
+	public Institution getHospital() {
+		return hospital;
+	}
+
+	public void setHospital(Institution hospital) {
+		this.hospital = hospital;
+	}
 }

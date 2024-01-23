@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.beans.Demande;
 import com.beans.Donnateur;
+import com.beans.Institution;
 import com.dao.DonnateurDAO;
 
 import databaseConfig.ConnectionInstance;
@@ -82,6 +86,34 @@ public class DonnateurImpl implements DonnateurDAO {
 	public void deleteDonnateur(Donnateur donnateur) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Donnateur> getAll() {
+        List<Donnateur> donnateurs = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "SELECT * FROM donnateur");
+
+	        ResultSet resultSet = preparedStatement.executeQuery();
+
+	        while (resultSet.next()) {
+	        		Donnateur donnateur = new Donnateur();
+	        		donnateur.setIdDonnateur(resultSet.getInt("id"));
+	        		donnateur.setNom(resultSet.getString("nom"));
+	        		donnateur.setPrenom(resultSet.getString("pernom"));
+	        		donnateur.setCin(resultSet.getString("cin"));
+	        		donnateur.setTel(resultSet.getString("tel"));
+	        		donnateur.setCodeAnalyse(resultSet.getString("codeAnalyse"));
+	        		donnateur.setPhotoGenereAnalyse(resultSet.getString("espace"));
+		            		            
+	        		donnateurs.add(donnateur);
+	        }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return donnateurs;
 	}
 
 
