@@ -9,27 +9,38 @@
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-	<h1>Hospital ! welcome ${sessionScope.user.nom}</h1>
-
 
 	
-
-<c:forEach items="${institutions}" var="institution">
-<div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
-    <a href="#">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">${institution.getNom()}</h5>
-    </a>
-    <p class="mb-3 font-normal text-gray-700 dark:text-black">Telephone: ${institution.getTel()}</p>
-    <p class="mb-3 font-normal text-gray-700 dark:text-black">Adresse: ${institution.getAdresse()}</p>
-    <p class="mb-3 font-normal text-gray-700 dark:text-black">Email: ${institution.getEmail()}</p>
-    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Read more
-        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-        </svg>
-    </a>
+	<!-- component -->
+<div class="py-16 bg-gray-50 overflow-hidden">
+    <div class="container m-auto px-6 space-y-8 text-gray-500 md:px-12">
+        <div>
+            <span class="text-gray-600 text-lg font-semibold">Welcome ${sessionScope.user.nom}</span>
+            <h2 class="mt-4 text-2xl text-gray-900 font-bold md:text-4xl">PUT A TITLE <br class="lg:block" hidden> HERE</h2>
+        </div>
+        <div class="mt-16 grid border divide-x divide-y rounded-xl overflow-hidden sm:grid-cols-2 lg:divide-y-0 lg:grid-cols-3 xl:grid-cols-4">
+        <c:forEach items="${institutions}" var="institution">
+            <div class="relative group bg-white transition hover:z-[1] hover:shadow-2xl">
+                <div class="relative p-8 space-y-8">
+                    <img src="https://cdn.discordapp.com/attachments/1199392158193561610/1199392488268501143/735a97d8-531f-43fb-8b08-b20593143dd2.jpg?ex=65c2604c&is=65afeb4c&hm=a63c6c1d42da962327ece89153efdb1713a33e847acad86a15c32e0fa2dd76e3&" class="w-10" width="512" height="512" alt="burger illustration">
+                    
+                    <div class="space-y-2">
+                        <h5 class="text-xl text-gray-800 font-medium transition group-hover:text-yellow-600">${institution.getNom()}</h5>
+                        <p class="text-sm text-gray-600">Telephone: ${institution.getTel()}</p>
+                        <p class="text-sm text-gray-600">Adresse: ${institution.getAdresse()}</p>
+                        <p class="text-sm text-gray-600">Email: ${institution.getEmail()}</p>
+                    </div>
+                    <a href="#" class="flex justify-between items-center group-hover:text-yellow-600">
+                        <span class="text-sm">Read more</span>
+                        <span class="-translate-x-4 opacity-0 text-2xl transition duration-300 group-hover:opacity-100 group-hover:translate-x-0">&RightArrow;</span>
+                    </a>
+                </div>
+            </div>
+            </c:forEach>
+            
+        </div>
+    </div>
 </div>
-</c:forEach>
 
 
 
