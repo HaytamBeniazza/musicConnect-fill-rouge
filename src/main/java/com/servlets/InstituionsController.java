@@ -8,6 +8,8 @@ import org.apache.catalina.connector.Response;
 
 import com.beans.Institution;
 import com.dao.InstitutionDAO;
+import jakarta.servlet.RequestDispatcher;
+
 
 import daoImpl.InstitutionDAOImpl;
 import jakarta.servlet.ServletException;
@@ -69,7 +71,18 @@ public class InstituionsController extends HttpServlet {
 				HttpSession session = request.getSession() ;
 				session.setMaxInactiveInterval(60 * 60 * 60);
     			session.setAttribute("user", institutionToLogin);
-    	        response.sendRedirect(request.getContextPath()+"/Hospital/acceuil.jsp") ; 
+    			
+                List<Institution> institutions = metierInstitution.getAllByRole("center");
+                if (institutions.isEmpty()) {
+                    request.setAttribute("noInstitutions", true);
+                } else {
+                    request.setAttribute("institutions", institutions);
+                }
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/acceuil.jsp");
+                dispatcher.forward(request, response);
+    			
+				/* response.sendRedirect(request.getContextPath()+"/Hospital/acceuil.jsp") ; */
 			}else {
 	            String errorMessage = "email - mot de passe incorrect";
 				request.setAttribute("error", errorMessage);

@@ -2,6 +2,10 @@ package daoImpl;
 
 import com.beans.Institution;
 import com.dao.InstitutionDAO;
+import java.util.List;
+import java.util.ArrayList;
+
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -123,6 +127,38 @@ public class InstitutionDAOImpl implements InstitutionDAO {
 
         return false;
     }
+
+	@Override
+	public List<Institution> getAllByRole(String role) {
+		List<Institution> institutions = new ArrayList<>();
+
+	    try {
+	        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM `institution` WHERE `espace` = ?");
+	        preparedStatement.setString(1, role);
+
+	        ResultSet resultSet = preparedStatement.executeQuery();
+
+	        while (resultSet.next()) {
+	        		Institution institution = new Institution();
+		        	int id = resultSet.getInt("id");
+		            String nom = resultSet.getString("nom");
+		            String emailRs = resultSet.getString("email");
+		            String tel = resultSet.getString("tel");
+		            String adresse = resultSet.getString("adresse");
+		            String password = resultSet.getString("password");
+		            String espace = resultSet.getString("espace");
+		            
+		            institutions.add(institution);
+	        }
+
+	        resultSet.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+
+	    return institutions;
+	}
 
 
 }
