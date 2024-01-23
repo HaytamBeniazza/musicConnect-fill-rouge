@@ -36,6 +36,7 @@ public class InstituionsController extends HttpServlet {
 			request.getRequestDispatcher("/contact.jsp").forward(request,response);
 			
 		}else if(path.equals("/signup.in") && request.getMethod().equals("POST")) {
+			
 				String nom = request.getParameter("nom");
 		        String tel = request.getParameter("tel");
 		        String adresse = request.getParameter("adresse");
@@ -51,6 +52,31 @@ public class InstituionsController extends HttpServlet {
 
 		        
 		        
+		}else if(path.equals("/Hospital/centerDetails.jsp")){
+			String centreIdParam = request.getParameter("id");
+			if (centreIdParam != null && !centreIdParam.isEmpty()) {
+	            try {
+	            	int centreId = Integer.parseInt(centreIdParam);
+	                Institution institution = metierInstitution.getById(centreId);
+	                if (institution != null) {
+	                    request.setAttribute("institution", institution);
+	                    System.out.println("hello");
+	                    
+	                    RequestDispatcher dispatcher = request.getRequestDispatcher("/hospital/centerDetails.jsp");
+	                    dispatcher.forward(request, response);
+	                } else {
+	                    response.sendRedirect("error.jsp");
+	                    return;
+	                }
+	            } catch (NumberFormatException e) {
+	                response.sendRedirect("error.jsp");
+	                return;
+	            }
+	        } else {
+	            response.sendRedirect("error.jsp");
+	            return;
+	        }
+			
 		}else if(path.equals("/logged.in") && request.getMethod().equals("POST")) {
 			
 			Institution institutionToLogin = new Institution()  ;
@@ -78,7 +104,6 @@ public class InstituionsController extends HttpServlet {
                 } else {
                     request.setAttribute("institutions", institutions);
                 }
-
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/acceuil.jsp");
                 dispatcher.forward(request, response);
                 
