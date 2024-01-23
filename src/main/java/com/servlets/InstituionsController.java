@@ -81,8 +81,8 @@ public class InstituionsController extends HttpServlet {
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/acceuil.jsp");
                 dispatcher.forward(request, response);
+                
     			
-				/* response.sendRedirect(request.getContextPath()+"/Hospital/acceuil.jsp") ; */
 			}else {
 	            String errorMessage = "email - mot de passe incorrect";
 				request.setAttribute("error", errorMessage);
