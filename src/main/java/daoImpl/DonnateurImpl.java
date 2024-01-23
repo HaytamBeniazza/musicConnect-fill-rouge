@@ -27,7 +27,7 @@ public class DonnateurImpl implements DonnateurDAO {
 	        preparedStatement.setString(3, donnateur.getCin());
 	        preparedStatement.setString(4, donnateur.getTel());
 	        preparedStatement.setString(5, donnateur.getCodeAnalyse());
-	        preparedStatement.setBytes(6, donnateur.getPhotoGenereAnalyse());
+	        preparedStatement.setString(6, donnateur.getPhotoGenereAnalyse());
 
 	        preparedStatement.executeUpdate();
 	        System.out.println("Insertion of Donnateur successful");
@@ -52,7 +52,7 @@ public class DonnateurImpl implements DonnateurDAO {
 	            String cin = resultSet.getString("cin");
 	            String tel = resultSet.getString("tel");
 	            String codeAnalyse = resultSet.getString("code_analyse");
-	            byte[] photoGenereAnalyse = resultSet.getBytes("photo_genere_analyse");
+	            String photoGenereAnalyse = resultSet.getString("photo_genere_analyse");
 
 	            donnateur = new Donnateur() ; 
 	            donnateur.setIdDonnateur(idDonnateur);
@@ -70,6 +70,18 @@ public class DonnateurImpl implements DonnateurDAO {
 	    }
 
 	    return donnateur;
+	}
+
+	@Override
+	public void updateDonnateur(Donnateur donnateur) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteDonnateur(Donnateur donnateur) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

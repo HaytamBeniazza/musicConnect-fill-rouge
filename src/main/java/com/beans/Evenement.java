@@ -4,17 +4,19 @@ import java.util.Date;
 
 public class Evenement {
 
-    private String idEvent;
+    private int idEvent;
     private String titre;
     private String description;
     private Date date;
     private String adresse;
     private Donnateur donnateur ; 
+    private Pochette pochette ; 
+    
 
     public Evenement() {
     }
 
-    public Evenement(String idEvent, String titre, String description, Date date, String adresse) {
+    public Evenement(int idEvent, String titre, String description, Date date, String adresse) {
         this.idEvent = idEvent;
         this.titre = titre;
         this.description = description;
@@ -22,11 +24,11 @@ public class Evenement {
         this.adresse = adresse;
     }
 
-    public String getIdEvent() {
+    public int getIdEvent() {
         return idEvent;
     }
 
-    public void setIdEvent(String idEvent) {
+    public void setIdEvent(int idEvent) {
         this.idEvent = idEvent;
     }
 
@@ -61,4 +63,20 @@ public class Evenement {
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
+
+	public Donnateur getDonnateur() {
+		return donnateur;
+	}
+
+	public void setDonnateur(Donnateur donnateur) {
+		this.donnateur = donnateur;
+	}
+
+	public Pochette getPochette() {
+		return pochette;
+	}
+
+	public void setPochette(Pochette pochette) {
+		this.pochette = pochette;
+	}
 }

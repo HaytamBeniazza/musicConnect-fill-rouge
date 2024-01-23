@@ -52,7 +52,7 @@ public class InstituionsController extends HttpServlet {
 
 		        
 		        
-		}else if(path.equals("/Hospital/centerDetails.jsp")){
+		}else if(path.equals("/Hospital/centerDetails")){
 			String centreIdParam = request.getParameter("id");
 			if (centreIdParam != null && !centreIdParam.isEmpty()) {
 	            try {

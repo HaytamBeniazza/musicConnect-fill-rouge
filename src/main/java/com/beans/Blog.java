@@ -2,6 +2,7 @@ package com.beans;
 
 public class Blog {
 
+	private long id  ; 
     private String titreBlog;
     private String description;
     private String imageBlog;
@@ -46,5 +47,13 @@ public class Blog {
 
 	public void setInstitution(Institution institution) {
 		this.institution = institution;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

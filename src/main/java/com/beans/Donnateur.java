@@ -8,12 +8,12 @@ public class Donnateur {
     private String cin;
     private String tel;
     private String codeAnalyse;
-    private byte[] photoGenereAnalyse;
+    private String photoGenereAnalyse;
 
     public Donnateur() {
     }
 
-    public Donnateur(int idDonnateur, String nom, String prenom, String cin, String tel, String codeAnalyse, byte[] photoGenereAnalyse) {
+    public Donnateur(int idDonnateur, String nom, String prenom, String cin, String tel, String codeAnalyse, String photoGenereAnalyse) {
         this.idDonnateur = idDonnateur;
         this.nom = nom;
         this.prenom = prenom;
@@ -72,11 +72,11 @@ public class Donnateur {
         this.codeAnalyse = codeAnalyse;
     }
 
-    public byte[] getPhotoGenereAnalyse() {
+    public String getPhotoGenereAnalyse() {
         return photoGenereAnalyse;
     }
 
-    public void setPhotoGenereAnalyse(byte[] photoGenereAnalyse) {
+    public void setPhotoGenereAnalyse(String photoGenereAnalyse) {
         this.photoGenereAnalyse = photoGenereAnalyse;
     }
 
