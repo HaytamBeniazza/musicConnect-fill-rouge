@@ -140,14 +140,13 @@ public class InstitutionDAOImpl implements InstitutionDAO {
 
 	        while (resultSet.next()) {
 	        		Institution institution = new Institution();
-		        	int id = resultSet.getInt("id");
-		            String nom = resultSet.getString("nom");
-		            String emailRs = resultSet.getString("email");
-		            String tel = resultSet.getString("tel");
-		            String adresse = resultSet.getString("adresse");
-		            String password = resultSet.getString("password");
-		            String espace = resultSet.getString("espace");
-		            
+	        		institution.setId(resultSet.getInt("id"));
+	        		institution.setNom(resultSet.getString("nom"));
+	        		institution.setEmail(resultSet.getString("email"));
+	        		institution.setTel(resultSet.getString("tel"));
+	        		institution.setAdresse(resultSet.getString("adresse"));
+	        		institution.setEspace(resultSet.getString("espace"));
+		            		            
 		            institutions.add(institution);
 	        }
 
