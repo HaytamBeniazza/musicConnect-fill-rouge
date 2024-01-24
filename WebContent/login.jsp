@@ -31,7 +31,7 @@
             <label for="espace">Vous etes ?</label>
             
             <label for="hopital">Espace Hopital</label>
-            <input type="radio" id="hopital" name="espace" value="hospital">
+            <input type="radio" id="hopital" name="espace" value="hopital">
             <label for="center">Espace Center</label><br>
             <input type="radio" id="center" name="espace" value="center">
             <input type="submit" value="Se connecter">

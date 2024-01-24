@@ -95,7 +95,7 @@ public class InstituionsController extends HttpServlet {
 	 * System.out.println("hello");
 	 * 
 	 * RequestDispatcher dispatcher =
-	 * request.getRequestDispatcher("/hospital/centerDetails.jsp");
+	 * request.getRequestDispatcher("/Hospital/centerDetails.jsp");
 	 * dispatcher.forward(request, response); } else {
 	 * response.sendRedirect("error.jsp"); return; } } catch (NumberFormatException
 	 * e) { response.sendRedirect("error.jsp"); return; } } else {
@@ -183,21 +183,31 @@ public class InstituionsController extends HttpServlet {
 		Institution institutionToLogin = new Institution()  ;
 		institutionToLogin.setEmail(request.getParameter("email")); 
 		institutionToLogin.setPassword(request.getParameter("password"));
+
 		institutionToLogin.setEspace(request.getParameter("espace"));
-		institutionToLogin = metierInstitution.getByEmail(institutionToLogin.getEmail()) ; 
-		
-		
-		if(institutionToLogin!=null && institutionToLogin.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institutionToLogin.getEspace().equals("center")) {
+		Institution institution = metierInstitution.getByEmail(institutionToLogin.getEmail()) ; 		
+
+		if(institution.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institution.getEspace().equals("center")) {
+			System.out.print("center");
 			HttpSession session = request.getSession() ; 
 			session.setMaxInactiveInterval(60 * 60 * 60);
-			session.setAttribute("user", institutionToLogin);
+			session.setAttribute("user", institution);
 	        response.sendRedirect(request.getContextPath()+"/Center/dashboard.jsp") ; 
-		}else if(institutionToLogin!=null && institutionToLogin.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institutionToLogin.getEspace().equals("hospital")) {
+		}else if(institution.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institution.getEspace().equals("hopital")) {
+			System.out.print("center");
 			HttpSession session = request.getSession() ;
 			session.setMaxInactiveInterval(60 * 60 * 60);
-			session.setAttribute("user", institutionToLogin);
-			System.out.print("hello");
-	        response.sendRedirect(request.getContextPath()+"/Hospital/acceuil.jsp") ; 
+			session.setAttribute("user", institution);
+			
+			 List<Institution> institutions = metierInstitution.getAllByRole("center"); 
+			 if(institutions.isEmpty()) { 
+				 request.setAttribute("noInstitutions", true); 
+			 }else { 
+				 request.setAttribute("institutions", institutions); 
+			 }
+			 RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/acceuil.jsp");
+			 dispatcher.forward(request, response);
+
 		}else {
             String errorMessage = "email - mot de passe incorrect";
 			request.setAttribute("error", errorMessage);
