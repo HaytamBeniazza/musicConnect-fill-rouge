@@ -9,8 +9,8 @@ public class Evenement {
     private String description;
     private Date date;
     private String adresse;
-    private Donnateur donnateur ; 
-    private Pochette pochette ; 
+    private Institution institution ; 
+
     
 
     public Evenement() {
@@ -64,19 +64,12 @@ public class Evenement {
         this.adresse = adresse;
     }
 
-	public Donnateur getDonnateur() {
-		return donnateur;
+	public Institution getInstitution() {
+		return institution;
 	}
 
-	public void setDonnateur(Donnateur donnateur) {
-		this.donnateur = donnateur;
+	public void setInstitution(Institution institution) {
+		this.institution = institution;
 	}
 
-	public Pochette getPochette() {
-		return pochette;
-	}
-
-	public void setPochette(Pochette pochette) {
-		this.pochette = pochette;
-	}
 }
