@@ -44,6 +44,7 @@ public class InstitutionDAOImpl implements InstitutionDAO {
 	            institution.setId(id);
 	            institution.setNom(nom);
 	            institution.setTel(tel);
+	            institution.setEmail(email);
 	            institution.setAdresse(adresse);
 	            institution.setEspace(espace);
 	        }

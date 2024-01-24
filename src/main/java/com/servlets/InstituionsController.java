@@ -42,8 +42,8 @@ public class InstituionsController extends HttpServlet {
             case "/logged.in" :
                 loggedIn(request,response);
                 break;
-            case "/hopital/detailes-centre" :
-                centre(request,response);
+            case "/centre.in" :
+                centreDetails(request,response);
                 break;
 //            case "/editEmployee" :
 //                editEmployee(request,response);
@@ -188,13 +188,11 @@ public class InstituionsController extends HttpServlet {
 		Institution institution = metierInstitution.getByEmail(institutionToLogin.getEmail()) ; 		
 
 		if(institution.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institution.getEspace().equals("center")) {
-			System.out.print("center");
 			HttpSession session = request.getSession() ; 
 			session.setMaxInactiveInterval(60 * 60 * 60);
 			session.setAttribute("user", institution);
 	        response.sendRedirect(request.getContextPath()+"/Center/dashboard.jsp") ; 
 		}else if(institution.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institution.getEspace().equals("hopital")) {
-			System.out.print("center");
 			HttpSession session = request.getSession() ;
 			session.setMaxInactiveInterval(60 * 60 * 60);
 			session.setAttribute("user", institution);
@@ -215,13 +213,15 @@ public class InstituionsController extends HttpServlet {
 		}
 	}
 	
-	public void centre(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	public void centreDetails(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 	       String centreIdParam = request.getParameter("id");
+	       
 
 	        if (centreIdParam != null && !centreIdParam.isEmpty()) {
 	            try {
 	            	Institution institution = metierInstitution.getById(Integer.parseInt(centreIdParam));
+	            	System.out.print(institution.getEmail());
 	                if (institution != null) {
 	                    request.setAttribute("institution", institution);
 	                } else {
