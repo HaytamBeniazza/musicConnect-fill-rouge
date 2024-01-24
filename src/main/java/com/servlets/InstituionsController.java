@@ -168,7 +168,7 @@ public class InstituionsController extends HttpServlet {
 		
         Demande demande = new Demande();
         demande.setNbrPochettesDemandes(Integer.parseInt(request.getParameter("nbrpochette")));
-        demande.setGroupeSang(request.getParameter("nbrpochette"));
+        demande.setGroupeSang(request.getParameter("sang"));
         demande.setNbrPochettesConfirmes(0);
         Institution centre = new Institution();
         String centreId = request.getParameter("id");
