@@ -6,7 +6,7 @@ import com.beans.Demande;
 
 public interface DemandeDAO {
 	
-	public void addDemande(Demande demande); 
+	public boolean addDemande(Demande demande); 
 	public List<Demande> getAll() ; 
 	public Demande getDemandeByID(int id) ; 
 	public void updateDemande(Demande demande) ; 

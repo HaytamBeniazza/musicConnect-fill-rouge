@@ -7,11 +7,14 @@ import java.util.List;
 import org.apache.catalina.connector.Response;
 
 import com.beans.Institution;
+import com.beans.Demande;
 import com.dao.InstitutionDAO;
+import com.dao.DemandeDAO;
 import jakarta.servlet.RequestDispatcher;
 
 
 import daoImpl.InstitutionDAOImpl;
+import daoImpl.DemandeDAOImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -20,6 +23,7 @@ import jakarta.servlet.http.*;
 public class InstituionsController extends HttpServlet {
 	
 	private InstitutionDAO metierInstitution = new InstitutionDAOImpl() ; 
+	private DemandeDAO demandeDAO = new DemandeDAOImpl() ; 
 
 	
 	@Override
@@ -45,9 +49,9 @@ public class InstituionsController extends HttpServlet {
             case "/centre.in" :
                 centreDetails(request,response);
                 break;
-//            case "/editEmployee" :
-//                editEmployee(request,response);
-//                break;
+            case "/demande.in" :
+                demande(request,response);
+                break;
         }
 	}
 	
@@ -56,87 +60,6 @@ public class InstituionsController extends HttpServlet {
 		doGet(req, resp);
 	}
 	
-	
-	
-	/*
-	 * String path = request.getServletPath() ; if(path.equals("/register.in")) {
-	 * request.getRequestDispatcher("/signup.jsp").forward(request,response);
-	 * 
-	 * }else if(path.equals("/login.in")) {
-	 * request.getRequestDispatcher("/login.jsp").forward(request,response); }
-	 * 
-	 * else if(path.equals("/contact.in")) {
-	 * request.getRequestDispatcher("/contact.jsp").forward(request,response);
-	 * 
-	 * }else if(path.equals("/signup.in") && request.getMethod().equals("POST")) {
-	 * 
-	 * String nom = request.getParameter("nom"); String tel =
-	 * request.getParameter("tel"); String adresse =
-	 * request.getParameter("adresse"); String email =
-	 * request.getParameter("email"); String password =
-	 * request.getParameter("password"); String espace =
-	 * request.getParameter("espace");
-	 * 
-	 * Institution institution = new Institution(nom, tel, adresse, email, password,
-	 * espace) ; metierInstitution.createInstitution(institution) ; String success =
-	 * "Compte "+espace+" ajouter avec succes" ; request.setAttribute("succes",
-	 * success ) ;
-	 * response.sendRedirect(request.getContextPath()+"/login.jsp?success="+success)
-	 * ;
-	 * 
-	 * 
-	 * 
-	 * }else if(path.equals("/Hospital/centerDetails")){ String centreIdParam =
-	 * request.getParameter("id"); if (centreIdParam != null &&
-	 * !centreIdParam.isEmpty()) { try { int centreId =
-	 * Integer.parseInt(centreIdParam); Institution institution =
-	 * metierInstitution.getById(centreId); if (institution != null) {
-	 * request.setAttribute("institution", institution);
-	 * System.out.println("hello");
-	 * 
-	 * RequestDispatcher dispatcher =
-	 * request.getRequestDispatcher("/Hospital/centerDetails.jsp");
-	 * dispatcher.forward(request, response); } else {
-	 * response.sendRedirect("error.jsp"); return; } } catch (NumberFormatException
-	 * e) { response.sendRedirect("error.jsp"); return; } } else {
-	 * response.sendRedirect("error.jsp"); return; }
-	 * 
-	 * }else if(path.equals("/logged.in") && request.getMethod().equals("POST")) {
-	 * 
-	 * Institution institutionToLogin = new Institution() ; String email =
-	 * request.getParameter("email") ; String password =
-	 * request.getParameter("password") ; System.out.println(password); String
-	 * espace = request.getParameter("espace") ; institutionToLogin =
-	 * metierInstitution.getByEmail(email) ;
-	 * System.out.println(institutionToLogin.getEmail());
-	 * System.out.println(institutionToLogin.getPassword());
-	 * 
-	 * if(institutionToLogin!=null && institutionToLogin.isValid(email, password) &&
-	 * espace.equals("center")) { HttpSession session = request.getSession() ;
-	 * session.setMaxInactiveInterval(60 * 60 * 60); session.setAttribute("user",
-	 * institutionToLogin);
-	 * response.sendRedirect(request.getContextPath()+"/Center/dashboard.jsp") ;
-	 * }else if(institutionToLogin!=null && institutionToLogin.isValid(email,
-	 * password) && espace.equals("hospital")) { HttpSession session =
-	 * request.getSession() ; session.setMaxInactiveInterval(60 * 60 * 60);
-	 * session.setAttribute("user", institutionToLogin);
-	 * 
-	 * List<Institution> institutions = metierInstitution.getAllByRole("center"); if
-	 * (institutions.isEmpty()) { request.setAttribute("noInstitutions", true); }
-	 * else { request.setAttribute("institutions", institutions); }
-	 * RequestDispatcher dispatcher =
-	 * request.getRequestDispatcher("/Hospital/acceuil.jsp");
-	 * dispatcher.forward(request, response);
-	 * 
-	 * 
-	 * }else { String errorMessage = "email - mot de passe incorrect";
-	 * request.setAttribute("error", errorMessage);
-	 * request.getRequestDispatcher("login.jsp").forward(request, response); }
-	 * 
-	 * }
-	 * 
-	 * else{ response.sendError(Response.SC_NOT_FOUND); }
-	 */
 	
 	public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         RequestDispatcher dispatcher = request.getRequestDispatcher("/signup.jsp");
@@ -190,12 +113,12 @@ public class InstituionsController extends HttpServlet {
 		if(institution.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institution.getEspace().equals("center")) {
 			HttpSession session = request.getSession() ; 
 			session.setMaxInactiveInterval(60 * 60 * 60);
-			session.setAttribute("user", institution);
+			session.setAttribute("user", institution.getId());
 	        response.sendRedirect(request.getContextPath()+"/Center/dashboard.jsp") ; 
 		}else if(institution.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institution.getEspace().equals("hopital")) {
 			HttpSession session = request.getSession() ;
 			session.setMaxInactiveInterval(60 * 60 * 60);
-			session.setAttribute("user", institution);
+			session.setAttribute("user", institution.getId());
 			
 			 List<Institution> institutions = metierInstitution.getAllByRole("center"); 
 			 if(institutions.isEmpty()) { 
@@ -221,7 +144,6 @@ public class InstituionsController extends HttpServlet {
 	        if (centreIdParam != null && !centreIdParam.isEmpty()) {
 	            try {
 	            	Institution institution = metierInstitution.getById(Integer.parseInt(centreIdParam));
-	            	System.out.print(institution.getEmail());
 	                if (institution != null) {
 	                    request.setAttribute("institution", institution);
 	                } else {
@@ -239,6 +161,69 @@ public class InstituionsController extends HttpServlet {
 
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/centerDetails.jsp");
 	        dispatcher.forward(request, response);
+		
+	}
+	
+	public void demande(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+        Demande demande = new Demande();
+        demande.setNbrPochettesDemandes(Integer.parseInt(request.getParameter("nbrpochette")));
+        demande.setGroupeSang(request.getParameter("nbrpochette"));
+        demande.setNbrPochettesConfirmes(0);
+        Institution centre = new Institution();
+        String centreId = request.getParameter("id");
+        System.out.println(centreId);
+        centre = metierInstitution.getById(Integer.parseInt(centreId));
+        demande.setCentre(centre);
+        
+        Institution hospital = new Institution();
+        HttpSession session = request.getSession();
+        Object userIdAttribute = session.getAttribute("user");
+
+        if (userIdAttribute != null) {
+            String userIdString = userIdAttribute.toString();
+            System.out.println(userIdString);
+            hospital = metierInstitution.getById(Integer.parseInt(userIdString));
+        } else {
+            // Handle the case when the user ID is not found in the session
+            // You might want to redirect the user to the login page or show an error message
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+        }
+
+        demande.setHospital(hospital);
+
+        boolean success = demandeDAO.addDemande(demande);
+        if (success) {
+        	
+ 	       String centreIdParam = request.getParameter("id");
+	       
+
+	        if (centreIdParam != null && !centreIdParam.isEmpty()) {
+	            try {
+	            	Institution institution = metierInstitution.getById(Integer.parseInt(centreIdParam));
+	                if (institution != null) {
+	                    request.setAttribute("institution", institution);
+	                } else {
+	                    response.sendRedirect("error.jsp");
+	                    return;
+	                }
+	            } catch (NumberFormatException e) {
+	                response.sendRedirect("error.jsp");
+	                return;
+	            }
+	        } else {
+	            response.sendRedirect("error.jsp");
+	            return;
+	        }
+            // Use RequestDispatcher to forward the request to the same page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/centerDetails.jsp?success=" + success);
+            dispatcher.forward(request, response);
+        } else {
+            // Handle the case when the request could not be processed successfully
+            // You might want to display an error message on the same page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/centerDetails.jsp?success=" + success);
+            dispatcher.forward(request, response);
+        }
 		
 	}
 	

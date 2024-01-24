@@ -19,7 +19,7 @@ public class DemandeDAOImpl implements DemandeDAO {
     private InstitutionDAO metierInstitution = new InstitutionDAOImpl() ; 
 
     @Override
-    public void addDemande(Demande demande) {
+    public boolean addDemande(Demande demande) {
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(
                     "INSERT INTO demande (nbr_pochettes_demandes, nbr_pochettes_confirmes, groupe_sang, centre_id, hospital_id) VALUES (?, ?, ?, ?, ?);");
@@ -32,9 +32,11 @@ public class DemandeDAOImpl implements DemandeDAO {
 
             preparedStatement.executeUpdate();
             System.out.println("Insertion of Demande successful");
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override

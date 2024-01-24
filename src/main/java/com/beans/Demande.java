@@ -19,6 +19,15 @@ public class Demande {
         this.nbrPochettesConfirmes = nbrPochettesConfirmes;
         this.groupeSang = groupeSang;
     }
+    
+    public Demande(int idDemande, int nbrPochettesDemandes, int nbrPochettesConfirmes, String groupeSang, Institution centre, Institution hospital) {
+        this.idDemande = idDemande;
+        this.nbrPochettesDemandes = nbrPochettesDemandes;
+        this.nbrPochettesConfirmes = nbrPochettesConfirmes;
+        this.groupeSang = groupeSang;
+        this.centre = centre;
+        this.hospital = hospital;
+    }
 
     public int getIdDemande() {
         return idDemande;

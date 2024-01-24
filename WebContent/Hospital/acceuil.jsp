@@ -15,7 +15,7 @@
 <div class="py-16 bg-gray-50 overflow-hidden">
     <div class="container m-auto px-6 space-y-8 text-gray-500 md:px-12">
         <div>
-            <span class="text-gray-600 text-lg font-semibold">Welcome ${sessionScope.user.nom}</span>
+           <%--  <span class="text-gray-600 text-lg font-semibold">Welcome ${sessionScope.user.nom}</span> --%>
             <h2 class="mt-4 text-2xl text-gray-900 font-bold md:text-4xl">PUT A TITLE <br class="lg:block" hidden> HERE</h2>
         </div>
         <div class="mt-16 grid border divide-x divide-y rounded-xl overflow-hidden sm:grid-cols-2 lg:divide-y-0 lg:grid-cols-3 xl:grid-cols-4">
