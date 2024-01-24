@@ -10,6 +10,8 @@
 </head>
 <body>
 
+<jsp:include page="../ressources/navbar.jsp" />
+
 	
 	<!-- component -->
 <div class="py-16 bg-gray-50 overflow-hidden">

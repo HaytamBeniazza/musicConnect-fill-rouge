@@ -17,7 +17,7 @@
 </head>
 <body>
 
-    <jsp:include page="navbar.jsp"></jsp:include>
+    <jsp:include page="../ressources/navbar.jsp" />
 
 <!--     <div class="dashboard-container">
         <div class="widget">

@@ -60,7 +60,6 @@ public class InstituionsController extends HttpServlet {
 		doGet(req, resp);
 	}
 	
-	
 	public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         RequestDispatcher dispatcher = request.getRequestDispatcher("/signup.jsp");
         dispatcher.forward(request, response);
@@ -114,12 +113,13 @@ public class InstituionsController extends HttpServlet {
 			HttpSession session = request.getSession() ; 
 			session.setMaxInactiveInterval(60 * 60 * 60);
 			session.setAttribute("user", institution.getId());
+			session.setAttribute("institution", institution);
 	        response.sendRedirect(request.getContextPath()+"/Center/dashboard.jsp") ; 
 		}else if(institution.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institution.getEspace().equals("hopital")) {
 			HttpSession session = request.getSession() ;
 			session.setMaxInactiveInterval(60 * 60 * 60);
 			session.setAttribute("user", institution.getId());
-			
+			session.setAttribute("institution", institution);
 			 List<Institution> institutions = metierInstitution.getAllByRole("center"); 
 			 if(institutions.isEmpty()) { 
 				 request.setAttribute("noInstitutions", true); 
