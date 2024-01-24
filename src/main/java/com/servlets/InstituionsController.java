@@ -185,8 +185,6 @@ public class InstituionsController extends HttpServlet {
             System.out.println(userIdString);
             hospital = metierInstitution.getById(Integer.parseInt(userIdString));
         } else {
-            // Handle the case when the user ID is not found in the session
-            // You might want to redirect the user to the login page or show an error message
             response.sendRedirect(request.getContextPath() + "/login.jsp");
         }
 
@@ -215,12 +213,9 @@ public class InstituionsController extends HttpServlet {
 	            response.sendRedirect("error.jsp");
 	            return;
 	        }
-            // Use RequestDispatcher to forward the request to the same page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/centerDetails.jsp?success=" + success);
             dispatcher.forward(request, response);
         } else {
-            // Handle the case when the request could not be processed successfully
-            // You might want to display an error message on the same page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/centerDetails.jsp?success=" + success);
             dispatcher.forward(request, response);
         }
