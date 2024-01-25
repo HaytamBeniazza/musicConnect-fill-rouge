@@ -17,7 +17,6 @@
 
 	<jsp:include page="ressources/navbar.jsp" />
 
-
 <div class="w-screen h-screen overflow-hidden relative before:block before:absolute before:bg-black before:h-full before:w-full before:top-0 before:left-0 before:z-10 before:opacity-30">
   <img src="https://media.discordapp.net/attachments/1199392158193561610/1199733629425831996/nguy-n-hi-p-sTTeaN4wwrU-unsplash.jpg?ex=65c39e03&is=65b12903&hm=26425f3026b3396df44191398b3eb61c6300243c813fbeefb6b753367ee32fff&=&format=webp&width=1123&height=662" class="absolute top-0 w-screen" alt="">
   <div class="relative z-20 max-w-screen-lg mx-auto grid grid-cols-12 h-full items-center">
@@ -35,5 +34,4 @@
   </div>
 </div>
 </body>
-
 </html>

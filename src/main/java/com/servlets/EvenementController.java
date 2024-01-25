@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
 public class EvenementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private EvenementDAO evenementDAO = new EvenementDAOImpl() ;
+	private EvenementDAO evenementDAO = new EvenementDAOImpl() ; 
 	private InstitutionDAO institutionDAO = new InstitutionDAOImpl() ; 
        
 
@@ -36,9 +36,9 @@ public class EvenementController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getServletPath() ; 
 		if(path.equals("/Center/events.ev")) {
-			List<Evenement> events = evenementDAO.getAllEvenements(); 
+			List<Evenement> events = evenementDAO.getAllEvenements() ; 
 			request.setAttribute("events", events) ;
-			request.getRequestDispatcher("ListEvenements.jsp").forward(request,response);
+			request.getRequestDispatcher("ListEvenments.jsp").forward(request,response);
 		
 		}else if(path.equals("/Center/addEvent.ev")){
 			request.getRequestDispatcher("addEvent.jsp").forward(request,response);
@@ -46,10 +46,9 @@ public class EvenementController extends HttpServlet {
 			
 		}else if(path.equals("/Center/postEvent.ev") && request.getMethod().equals("POST")) {
 			
-				HttpSession currentSession = request.getSession() ;
-				int currentInstitutionId = Integer.parseInt(currentSession.getAttribute("user").toString()); 
-//				System.out.println(currentInstitution.getEmail());	
-				Institution currentInstitution = institutionDAO.getById(currentInstitutionId);
+				HttpSession currentSession = request.getSession() ; 
+				Institution currentInstitution = (Institution) currentSession.getAttribute("user") ; 
+				System.out.println(currentInstitution.getEmail());
 			   String titre = request.getParameter("titre");
 		        String description = request.getParameter("description");
 		        String dateStr = request.getParameter("date");
@@ -70,6 +69,19 @@ public class EvenementController extends HttpServlet {
 
 		        evenementDAO.ajouter(event);
 		        response.sendRedirect(request.getContextPath()+"/Center/events.ev?success=Evenement ajoute avec succees") ; 
+		}else if(path.equals("/Users/events.ev")) {
+			List<Evenement> events = evenementDAO.getAllEvenements() ; 
+			request.setAttribute("events", events) ;
+			request.getRequestDispatcher("ListEvenments.jsp").forward(request,response);
+		
+		}else if(path.equals("/Users/singlDetailPage.ev")) {
+			int eventId = Integer.parseInt(request.getParameter("id")); 
+			Institution center = institutionDAO.getInstitutionByEventId(eventId)  ;
+			List<Evenement> events = evenementDAO.getEventsByCenter(center.getId()) ; 
+			request.setAttribute("events", events) ;
+			request.setAttribute("center", center) ;
+			request.getRequestDispatcher("singlDetailCenterPage.jsp").forward(request,response);
+		
 		}
 		
 		else{

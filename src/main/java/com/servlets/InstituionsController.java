@@ -233,7 +233,8 @@ public class InstituionsController extends HttpServlet {
     public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.invalidate();
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("../login.jsp");
+        dispatcher.forward(request, response);
     }
     
     

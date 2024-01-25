@@ -17,4 +17,6 @@ public interface InstitutionDAO {
     boolean deleteInstitution(int id);
     
     List<Institution> getAllByRole(String role);
+    
+    Institution getInstitutionByEventId(int eventId);
 }

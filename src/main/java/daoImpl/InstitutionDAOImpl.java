@@ -159,6 +159,43 @@ public class InstitutionDAOImpl implements InstitutionDAO {
 
 	    return institutions;
 	}
+	
+	
+	@Override
+	public Institution getInstitutionByEventId(int eventId) {
+		Institution institution = null;
+
+	    try {
+	        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM `institution` i join `evenement` e on i.id = e.centre_id  WHERE e.id_event = ?");
+	        preparedStatement.setInt(1, eventId);
+
+	        ResultSet resultSet = preparedStatement.executeQuery();
+
+	        if (resultSet.next()) {
+	        	int id = resultSet.getInt("id");
+	            String nom = resultSet.getString("nom");
+	            String emailRs = resultSet.getString("email");
+	            String tel = resultSet.getString("tel");
+	            String adresse = resultSet.getString("adresse");
+	            String password = resultSet.getString("password");
+
+	            institution = new Institution() ; 
+	            institution.setId(id);
+	            institution.setNom(nom);
+	            institution.setTel(tel);
+	            institution.setAdresse(adresse);
+	            institution.setEmail(emailRs);
+	            institution.setPassword(password);
+	        }
+
+	        resultSet.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+
+	    return institution;
+	}
 
 
 }

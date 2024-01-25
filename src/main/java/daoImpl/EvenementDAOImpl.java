@@ -143,4 +143,27 @@ public class EvenementDAOImpl implements EvenementDAO {
 
         return evenement; 
     }
+
+	@Override
+	public List<Evenement> getEventsByCenter(int id) {
+		 List<Evenement> evenements = new ArrayList<>();
+	        try {
+	            PreparedStatement preparedStatement = conn
+	                    .prepareStatement("SELECT * FROM evenement WHERE evenement.centre_id = ?");
+	            
+	            preparedStatement.setInt(1, id);
+
+	            ResultSet resultSet = preparedStatement.executeQuery();
+
+	            while (resultSet.next()) {
+	                Evenement evenement = extractEvenementFromResultSet(resultSet);
+	                evenements.add(evenement);
+	            }
+
+	            resultSet.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return evenements;
+	}
 }
