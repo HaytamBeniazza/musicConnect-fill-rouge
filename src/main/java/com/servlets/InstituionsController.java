@@ -52,6 +52,9 @@ public class InstituionsController extends HttpServlet {
             case "/demande.in" :
                 demande(request,response);
                 break;
+            case "/logout.in":
+                logout(request, response);
+                break;
         }
 	}
 	
@@ -221,6 +224,13 @@ public class InstituionsController extends HttpServlet {
         }
 		
 	}
+	
+	
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+    }
 	
 	
 
