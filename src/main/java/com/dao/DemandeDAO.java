@@ -10,6 +10,9 @@ public interface DemandeDAO {
 	public List<Demande> getAll() ; 
 	public Demande getDemandeByID(int id) ; 
 	public void updateDemande(Demande demande) ; 
+	public void updateDemandeToMatchConfirms(Demande demande) ; 
 	public void deleteDemande(int id) ;
-
+	public List<Demande> getAnswersByHospital(int id);
+	public List<Demande> getAnswersByCenter(int id);
+	public void updateDemandeTochangeConfirms(Demande demande);
 }

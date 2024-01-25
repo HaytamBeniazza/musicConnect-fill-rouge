@@ -42,7 +42,7 @@ public class PochetteController extends HttpServlet {
 			List<Donnateur> donnateurs = donnateurDAO.getAll() ; 
 			request.setAttribute("event", event) ;
 			request.setAttribute("donnateurs", donnateurs) ;
-			request.getRequestDispatcher("addpochette.jsp").forward(request,response);
+			request.getRequestDispatcher("addPochette.jsp").forward(request,response);
 		
 		}else if(path.equals("/Center/postPochette.pc") && request.getMethod().equals("POST")) {
 			

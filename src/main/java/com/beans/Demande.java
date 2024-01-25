@@ -6,6 +6,7 @@ public class Demande {
     private int nbrPochettesDemandes;
     private int nbrPochettesConfirmes;
     private String groupeSang;
+    private boolean answered;
     private Institution centre ; 
     private Institution hospital ; 
     
@@ -75,5 +76,13 @@ public class Demande {
 
 	public void setHospital(Institution hospital) {
 		this.hospital = hospital;
+	}
+	
+	public boolean getAnswered() {
+		return answered;
+	}
+
+	public void setAnswered(boolean answered) {
+		this.answered = answered;
 	}
 }

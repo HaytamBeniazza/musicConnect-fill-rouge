@@ -6,7 +6,7 @@
     <title>Single Detail Center Page</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/singleDetailCenterPage.css"> <!-- Add your custom CSS file -->
+    <link rel="stylesheet" href="css/singleDetailCenterPage.css">
 </head>
 <body class="bg-gray-100">
 

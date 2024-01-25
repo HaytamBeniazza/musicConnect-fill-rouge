@@ -125,4 +125,83 @@ public class DemandeDAOImpl implements DemandeDAO {
         demande.setHospital(metierInstitution.getById(resultSet.getInt("hospital_id")));
          return demande;
     }
+
+	@Override
+	public List<Demande> getAnswersByHospital(int id) {
+	       List<Demande> demandes = new ArrayList<>();
+	        try {
+	            PreparedStatement preparedStatement = conn.prepareStatement(
+	                    "SELECT * FROM demande where answered = true and hospital_id = ?");
+	            
+	            preparedStatement.setInt(1, id);
+
+	            ResultSet resultSet = preparedStatement.executeQuery();
+
+	            while (resultSet.next()) {
+	                Demande demande = extractDemandeFromResultSet(resultSet);
+	                demandes.add(demande);
+	            }
+
+	            resultSet.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return demandes;
+	}
+	
+	
+	@Override
+	public List<Demande> getAnswersByCenter(int id) {
+	       List<Demande> demandes = new ArrayList<>();
+	        try {
+	            PreparedStatement preparedStatement = conn.prepareStatement(
+	                    "SELECT * FROM demande where answered = false and centre_id = ?");
+	            
+	            preparedStatement.setInt(1, id);
+
+	            ResultSet resultSet = preparedStatement.executeQuery();
+
+	            while (resultSet.next()) {
+	                Demande demande = extractDemandeFromResultSet(resultSet);
+	                demandes.add(demande);
+	            }
+
+	            resultSet.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return demandes;
+	}
+	
+	
+    @Override
+    public void updateDemandeToMatchConfirms(Demande demande) {
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "UPDATE demande SET nbr_pochettes_confirmes = nbr_pochettes_demandes, answered = true WHERE id_demande = ?");
+
+            preparedStatement.setInt(1, demande.getIdDemande());
+
+            preparedStatement.executeUpdate();
+            System.out.println("Update of Demande successful");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void updateDemandeTochangeConfirms(Demande demande) {
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "UPDATE demande SET nbr_pochettes_confirmes = ?, answered = true WHERE id_demande = ?");
+
+            preparedStatement.setInt(1, demande.getNbrPochettesConfirmes());
+            preparedStatement.setInt(2, demande.getIdDemande());
+
+            preparedStatement.executeUpdate();
+            System.out.println("Update of Demande successful");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

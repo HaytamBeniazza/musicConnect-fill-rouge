@@ -38,7 +38,7 @@ public class EvenementController extends HttpServlet {
 		if(path.equals("/Center/events.ev")) {
 			List<Evenement> events = evenementDAO.getAllEvenements() ; 
 			request.setAttribute("events", events) ;
-			request.getRequestDispatcher("ListEvenments.jsp").forward(request,response);
+			request.getRequestDispatcher("ListEvenements.jsp").forward(request,response);
 		
 		}else if(path.equals("/Center/addEvent.ev")){
 			request.getRequestDispatcher("addEvent.jsp").forward(request,response);

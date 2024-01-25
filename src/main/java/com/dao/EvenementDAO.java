@@ -11,6 +11,5 @@ public interface EvenementDAO {
 	public Evenement getEvenementById(int idEvenement) ; 
 	public void updateEvenement(Evenement event) ;
 	public void deleteEvenement(int idEvent) ;
-	public List<Evenement> getEventsByCenter(int id); 
-
+	public List<Evenement> getEventsByCenter(int id);
 }

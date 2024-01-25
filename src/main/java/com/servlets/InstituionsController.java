@@ -49,11 +49,23 @@ public class InstituionsController extends HttpServlet {
             case "/logged.in" :
                 loggedIn(request,response);
                 break;
+            case "/acceuil.in" :
+                acceuil(request,response);
+                break;
             case "/centre.in" :
                 centreDetails(request,response);
                 break;
             case "/demande.in" :
                 demande(request,response);
+                break;
+            case "/demande-hopital.in" :
+                hospitalDemande(request,response);
+                break;
+            case "/demande-hopital-comfirmer.in" :
+                demandeConfirmed(request,response);
+                break;
+            case "/demande-hopital-repondu.in" :
+                demandeRsponded(request,response);
                 break;
             case "/reponse.in" :
                 response(request,response);
@@ -123,6 +135,7 @@ public class InstituionsController extends HttpServlet {
 			session.setMaxInactiveInterval(60 * 60 * 60);
 			session.setAttribute("user", institution.getId());
 			session.setAttribute("institution", institution);
+			session.setAttribute("institution1", institution.getEspace());
 	        response.sendRedirect(request.getContextPath()+"/Center/dashboard.jsp") ; 
 		}else if(institution.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institution.getEspace().equals("hopital")) {
 			HttpSession session = request.getSession() ;
@@ -130,7 +143,7 @@ public class InstituionsController extends HttpServlet {
 			session.setAttribute("user", institution.getId());
 			session.setAttribute("institution", institution);
 			session.setAttribute("institution1", institution.getEspace());
-			 List<Institution> institutions = metierInstitution.getAllByRole("center"); 
+			 List<Institution> institutions = metierInstitution.getAllByRole("center");
 			 if(institutions.isEmpty()) { 
 				 request.setAttribute("noInstitutions", true); 
 			 }else { 
@@ -236,7 +249,7 @@ public class InstituionsController extends HttpServlet {
     public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.invalidate();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("../login.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/login.in");
         dispatcher.forward(request, response);
     }
     
@@ -262,22 +275,107 @@ public class InstituionsController extends HttpServlet {
     
     public void response(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Object espaceObj = session.getAttribute("institution1");
-        
-        String espace = espaceObj.toString();
-        
-        if(espace == null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-            dispatcher.forward(request, response);
-        }else if(espace.equals("center")) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/Center/dashboard.jsp");
-            dispatcher.forward(request, response);
-        }else if(espace.equals("hopital")) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/acceuil.jsp");
-            dispatcher.forward(request, response);
-        }
+        Object userIdAttribute = session.getAttribute("user");
+        String userIdString = userIdAttribute.toString();
+    	List<Demande> answers = demandeDAO.getAnswersByHospital(Integer.parseInt(userIdString));
+		 if(answers.isEmpty()) { 
+			 request.setAttribute("noAnswers", true); 
+		 }else { 
+			 request.setAttribute("answers", answers); 
+		 }
+		 RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/reponse.jsp");
+		 dispatcher.forward(request, response);
         
     }
+    
+    
+    public void acceuil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 List<Institution> institutions = metierInstitution.getAllByRole("center");
+		 if(institutions.isEmpty()) { 
+			 request.setAttribute("noInstitutions", true); 
+		 }else { 
+			 request.setAttribute("institutions", institutions); 
+		 }
+		 RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/acceuil.jsp");
+		 dispatcher.forward(request, response);
+    }
+    
+    
+    
+    public void hospitalDemande(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Object userIdAttribute = session.getAttribute("user");
+        String userIdString = userIdAttribute.toString();
+    	List<Demande> answers = demandeDAO.getAnswersByCenter(Integer.parseInt(userIdString));
+		 if(answers.isEmpty()) { 
+			 request.setAttribute("noAnswers", true); 
+		 }else { 
+			 request.setAttribute("answers", answers); 
+		 }
+		 RequestDispatcher dispatcher = request.getRequestDispatcher("/Center/reponse.jsp");
+		 dispatcher.forward(request, response);
+   }
+    
+    
+   public void demandeConfirmed(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	   String centreIdParam = request.getParameter("id");
+       Demande demande = demandeDAO.getDemandeByID(Integer.parseInt(centreIdParam));
+       demandeDAO.updateDemandeToMatchConfirms(demande);
+       
+       HttpSession session = request.getSession();
+       Object userIdAttribute = session.getAttribute("user");
+       String userIdString = userIdAttribute.toString();
+   	List<Demande> answers = demandeDAO.getAnswersByCenter(Integer.parseInt(userIdString));
+		 if(answers.isEmpty()) { 
+			 request.setAttribute("noAnswers", true); 
+		 }else { 
+			 request.setAttribute("answers", answers); 
+		 }
+		 RequestDispatcher dispatcher = request.getRequestDispatcher("/Center/reponse.jsp");
+		 dispatcher.forward(request, response);
+  }
+   
+   
+   public void demandeRsponded(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	   String IdParam = request.getParameter("id");
+	   Demande demande = demandeDAO.getDemandeByID(Integer.parseInt(IdParam));
+       Demande confirm = new Demande();
+       confirm.setIdDemande(Integer.parseInt(IdParam));
+       confirm.setNbrPochettesConfirmes(Integer.parseInt(request.getParameter("nbrConfirmee")));
+       
+       if(demande.getNbrPochettesDemandes() >= confirm.getNbrPochettesConfirmes()) {
+    	   demandeDAO.updateDemandeTochangeConfirms(confirm);
+    	   
+           HttpSession session = request.getSession();
+           Object userIdAttribute = session.getAttribute("user");
+           String userIdString = userIdAttribute.toString();
+       	List<Demande> answers = demandeDAO.getAnswersByCenter(Integer.parseInt(userIdString));
+    		 if(answers.isEmpty()) { 
+    			 request.setAttribute("noAnswers", true); 
+    		 }else { 
+    			 request.setAttribute("answers", answers); 
+    		 }
+    		 RequestDispatcher dispatcher = request.getRequestDispatcher("/Center/reponse.jsp");
+    		 dispatcher.forward(request, response);
+       }else {
+           String errorMessage = "the value entered higher then the request";
+			request.setAttribute("error", errorMessage);
+			
+	           HttpSession session = request.getSession();
+	           Object userIdAttribute = session.getAttribute("user");
+	           String userIdString = userIdAttribute.toString();
+	       	List<Demande> answers = demandeDAO.getAnswersByCenter(Integer.parseInt(userIdString));
+	    		 if(answers.isEmpty()) { 
+	    			 request.setAttribute("noAnswers", true); 
+	    		 }else { 
+	    			 request.setAttribute("answers", answers); 
+	    		 }
+			 RequestDispatcher dispatcher = request.getRequestDispatcher("/Center/reponse.jsp");
+			 dispatcher.forward(request, response);
+       }
+	   
+	  
+  }
 	
 	
 
