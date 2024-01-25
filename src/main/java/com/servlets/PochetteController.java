@@ -63,10 +63,15 @@ public class PochetteController extends HttpServlet {
 			        response.sendRedirect(request.getContextPath() + "/Center/events.ev?success=Pochette ajoute avec succes");
 			    
 		}else if(path.equals("/Center/pochettes.pc")) {
+			String emptyy ; 
 			Institution currentInstitution = (Institution) request.getSession().getAttribute("user") ; 
 			
 			List<Pochette> pochettes = pochetteDAO.getPochettesByCenter(currentInstitution.getId()) ; 
 			request.setAttribute("pochettes", pochettes) ;
+			if(pochettes.isEmpty()) {
+				emptyy = "Aucun pochette pour ce centre" ; 
+				request.setAttribute(emptyy, emptyy) ; 
+			}
 	        request.getRequestDispatcher("/Center/pochettes.jsp").forward(request, response);
 
 	    

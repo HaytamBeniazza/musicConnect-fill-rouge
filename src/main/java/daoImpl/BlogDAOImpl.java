@@ -127,4 +127,32 @@ public class BlogDAOImpl implements BlogDAO {
 
 	        return blogs;
 	}
+	
+	
+	@Override
+	public List<Blog> getBlogsByCenter(int id) {
+		Blog blog = null ; 
+        List<Blog> blogs = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM blog where institution_id = ?");
+            
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {           
+                 blog = new Blog();
+	                blog.setId(resultSet.getLong("id"));
+	                blog.setTitreBlog(resultSet.getString("titreBlog"));
+	                blog.setDescription(resultSet.getString("description"));
+	                blog.setImageBlog(resultSet.getString("imageBlog"));
+	                blog.setInstitution(metierIstitution.getById(resultSet.getInt("institution_id")));
+	                blogs.add(blog);
+            }
+
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return blogs;
+	}
 }

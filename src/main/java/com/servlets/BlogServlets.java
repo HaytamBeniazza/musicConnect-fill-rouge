@@ -32,7 +32,9 @@ public class BlogServlets extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getServletPath() ; 
 		if(path.equals("/Center/blog.bce")) {
-			List<Blog> blogs = metierBlog.getAll() ; 
+			HttpSession currentSession = request.getSession() ; 
+			Institution center = (Institution) currentSession.getAttribute("user") ; 
+			List<Blog> blogs = metierBlog.getBlogsByCenter(center.getId()) ; 
 			request.setAttribute("blogs", blogs) ;
 			request.getRequestDispatcher("blog.jsp").forward(request,response);
 			
@@ -56,6 +58,17 @@ public class BlogServlets extends HttpServlet {
 
 		    metierBlog.addBlog(newBlog);
 	        response.sendRedirect(request.getContextPath()+"/Center/blog.bce?success=Blog ajoute avec succees") ; 
+		}else if(path.equals("/Users/allblogs.bce")) {
+			List<Blog> blogs = metierBlog.getAll() ; 
+			request.setAttribute("blogs", blogs) ;
+			request.getRequestDispatcher("blogs.jsp").forward(request,response);
+
+		}else if(path.equals("/Users/blogDetail.bce")) {
+			int id = Integer.parseInt(request.getParameter("id")) ; 
+			Blog blog = metierBlog.getBlogById(id) ; 
+			request.setAttribute("blog", blog) ;
+			request.getRequestDispatcher("blogDetail.jsp").forward(request,response);
+
 		}
 		
 		else{

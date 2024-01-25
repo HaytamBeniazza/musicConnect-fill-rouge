@@ -72,7 +72,7 @@ public class EvenementController extends HttpServlet {
 		}else if(path.equals("/Users/events.ev")) {
 			List<Evenement> events = evenementDAO.getAllEvenements() ; 
 			request.setAttribute("events", events) ;
-			request.getRequestDispatcher("ListEvenments.jsp").forward(request,response);
+			request.getRequestDispatcher("ListEvenements.jsp").forward(request,response);
 		
 		}else if(path.equals("/Users/singlDetailPage.ev")) {
 			int eventId = Integer.parseInt(request.getParameter("id")); 
