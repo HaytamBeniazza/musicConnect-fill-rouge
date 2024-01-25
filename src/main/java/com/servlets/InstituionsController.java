@@ -19,7 +19,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
-@WebServlet(name="in", urlPatterns = {"/institutionsController","*.in"})
+@WebServlet(name="in", urlPatterns = {"/institutionsController","*.in", "/"})
 public class InstituionsController extends HttpServlet {
 	
 	private InstitutionDAO metierInstitution = new InstitutionDAOImpl() ; 
@@ -31,6 +31,9 @@ public class InstituionsController extends HttpServlet {
 	
         String choix = request.getServletPath();
         switch (choix){
+	        case "/" :
+	            home(request,response);
+	            break;
             case "/register.in" :
                 register(request,response);
                 break;
@@ -123,6 +126,7 @@ public class InstituionsController extends HttpServlet {
 			session.setMaxInactiveInterval(60 * 60 * 60);
 			session.setAttribute("user", institution.getId());
 			session.setAttribute("institution", institution);
+			session.setAttribute("institution1", institution.getEspace());
 			 List<Institution> institutions = metierInstitution.getAllByRole("center"); 
 			 if(institutions.isEmpty()) { 
 				 request.setAttribute("noInstitutions", true); 
@@ -230,6 +234,26 @@ public class InstituionsController extends HttpServlet {
         HttpSession session = request.getSession();
         session.invalidate();
         response.sendRedirect(request.getContextPath() + "/login.jsp");
+    }
+    
+    
+    public void home(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Object espaceObj = session.getAttribute("institution1");
+        
+        String espace = espaceObj.toString();
+        
+        if(espace == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
+        }else if(espace.equals("center")) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Center/dashboard.jsp");
+            dispatcher.forward(request, response);
+        }else if(espace.equals("hopital")) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/acceuil.jsp");
+            dispatcher.forward(request, response);
+        }
+        
     }
 	
 	
