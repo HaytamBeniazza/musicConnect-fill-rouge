@@ -11,20 +11,23 @@ import java.util.List;
 
 import com.beans.Donnateur;
 import com.beans.Evenement;
+import com.beans.Institution;
 import com.beans.Pochette;
 import com.dao.EvenementDAO;
+import com.dao.InstitutionDAO;
 
 import databaseConfig.ConnectionInstance;
 
 public class EvenementDAOImpl implements EvenementDAO {
 
     private Connection conn = ConnectionInstance.getConnection();
+    private InstitutionDAO institutionDao = new InstitutionDAOImpl() ; 
 
     @Override
     public void ajouter(Evenement evenement) {
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(
-                    "INSERT INTO evenement (id_event, titre, description, date, adresse, donneur_id, pochette_id) VALUES (?, ?, ?, ?, ?, ?, ?);");
+                    "INSERT INTO evenement (id_event, titre, description, date, adresse, centre_id) VALUES (?, ?, ?, ?, ?,?);");
 
             preparedStatement.setInt(1, evenement.getIdEvent());
             preparedStatement.setString(2, evenement.getTitre());
@@ -35,8 +38,9 @@ public class EvenementDAOImpl implements EvenementDAO {
             preparedStatement.setDate(4, sqlDate);
 
             preparedStatement.setString(5, evenement.getAdresse());
-            preparedStatement.setInt(6, evenement.getDonnateur().getIdDonnateur());
-            preparedStatement.setInt(7, evenement.getPochette().getIdPochette());
+            preparedStatement.setInt(6, evenement.getInstitution().getId());
+
+      
 
             preparedStatement.executeUpdate();
             System.out.println("Insertion of Evenement successful");
@@ -91,7 +95,7 @@ public class EvenementDAOImpl implements EvenementDAO {
     public void updateEvenement(Evenement evenement) {
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(
-                    "UPDATE evenement SET titre = ?, description = ?, date = ?, adresse = ?, donneur_id = ?, pochette_id = ? WHERE id_event = ?");
+                    "UPDATE evenement SET titre = ?, description = ?, date = ?, adresse = ?, institution_id = ? WHERE id_event = ?");
 
             preparedStatement.setString(1, evenement.getTitre());
             preparedStatement.setString(2, evenement.getDescription());
@@ -101,8 +105,7 @@ public class EvenementDAOImpl implements EvenementDAO {
             preparedStatement.setDate(3, sqlDate);
 
             preparedStatement.setString(4, evenement.getAdresse());
-            preparedStatement.setInt(5, evenement.getDonnateur().getIdDonnateur());
-            preparedStatement.setInt(6, evenement.getPochette().getIdPochette());
+            preparedStatement.setInt(5, evenement.getInstitution().getId());
             preparedStatement.setInt(7, evenement.getIdEvent());
 
             preparedStatement.executeUpdate();
@@ -134,14 +137,10 @@ public class EvenementDAOImpl implements EvenementDAO {
         evenement.setDate(resultSet.getDate("date"));
         evenement.setAdresse(resultSet.getString("adresse"));
 
-        Donnateur donnateur = new Donnateur();
-        donnateur.setIdDonnateur(resultSet.getInt("donneur_id"));
-        evenement.setDonnateur(donnateur);
+        Institution institution = institutionDao.getById(resultSet.getInt("centre_id"))  ;
+        evenement.setInstitution(institution);
 
-        Pochette pochette = new Pochette();
-        pochette.setIdPochette(resultSet.getInt("pochette_id"));
-        evenement.setPochette(pochette);
 
-        return evenement;
+        return evenement; 
     }
 }

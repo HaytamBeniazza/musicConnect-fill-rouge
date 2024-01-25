@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/navbar.css">
 </head>
 <body>
-    <jsp:include page="navbar.jsp"></jsp:include>
+    <jsp:include page="../ressources/navbar.jsp" />
 
     <div class="blog-container">
         <h2>Ajouter un blog</h2>

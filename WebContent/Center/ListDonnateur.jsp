@@ -1,66 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donnateurs List</title>
-        <link rel="stylesheet" href="css/navbar.css">
-    
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 20px auto;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
 
-	
-	<%@ include file="navbar.jsp" %>
-	
-    <h2>Donnateurs List</h2>
+<jsp:include page="../ressources/navbar.jsp" />
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>CIN</th>
-                <th>Tel</th>
-                <th>Code Analyse</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Iterate over your list of Donnateurs and populate the table -->
-            <c:forEach var="donnateur" items="${donnateurs}">
+    <div class="container mx-auto p-8">
+
+        
+
+        <h2 class="text-3xl font-semibold mb-4">Donnateurs List</h2>
+
+        <table class="w-full bg-white border border-gray-300 shadow-lg">
+            <thead>
                 <tr>
-                    <td>${donnateur.idDonnateur}</td>
-                    <td>${donnateur.nom}</td>
-                    <td>${donnateur.prenom}</td>
-                    <td>${donnateur.cin}</td>
-                    <td>${donnateur.tel}</td>
-                    <td>${donnateur.codeAnalyse}</td>
-                    <td>
-                        <!-- Add links or buttons for actions (e.g., edit, delete) -->
-                        <a href="editDonnateur.do?id=${donnateur.idDonnateur}">Edit</a>
-                        <a href="deleteDonnateur.do?id=${donnateur.idDonnateur}">Delete</a>
-                    </td>
+                    <th class="py-2 px-4 border-b">ID</th>
+                    <th class="py-2 px-4 border-b">Nom</th>
+                    <th class="py-2 px-4 border-b">Prenom</th>
+                    <th class="py-2 px-4 border-b">CIN</th>
+                    <th class="py-2 px-4 border-b">Tel</th>
+                    <th class="py-2 px-4 border-b">Code Analyse</th>
+                    <th class="py-2 px-4 border-b">Actions</th>
                 </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <!-- Iterate over your list of Donnateurs and populate the table -->
+                <c:forEach var="donnateur" items="${donnateurs}">
+                    <tr>
+                        <td class="py-2 px-4 border-b">${donnateur.idDonnateur}</td>
+                        <td class="py-2 px-4 border-b">${donnateur.nom}</td>
+                        <td class="py-2 px-4 border-b">${donnateur.prenom}</td>
+                        <td class="py-2 px-4 border-b">${donnateur.cin}</td>
+                        <td class="py-2 px-4 border-b">${donnateur.tel}</td>
+                        <td class="py-2 px-4 border-b">${donnateur.codeAnalyse}</td>
+                        <td class="py-2 px-4 border-b">
+                            <!-- Add links or buttons for actions (e.g., edit, delete) -->
+                            <a href="editDonnateur.do?id=${donnateur.idDonnateur}" class="text-blue-500 hover:underline mr-2">Edit</a>
+                            <a href="deleteDonnateur.do?id=${donnateur.idDonnateur}" class="text-red-500 hover:underline">Delete</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+
+    </div>
 
 </body>
 </html>

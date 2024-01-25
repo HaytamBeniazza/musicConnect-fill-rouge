@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/navbar.css">
 </head>
 <body>
-    <jsp:include page="navbar.jsp"></jsp:include>
+    <jsp:include page="../ressources/navbar.jsp" />
 
     <div class="blog-container">
         <h2>Donnattion de sang - Pochettes de sang</h2>
@@ -17,7 +17,9 @@
         <div class="blog-cards">
             <c:forEach var="p" items="${pochettes}">
                 <div class="blog-card">
-                    <a href="singlEvent.ev?id=${p.evenement.idEvent}" ><h2>Evenement : ${p.evenement.titre}</h3></a>
+                    <a href="singlEvent.ev?id=${p.evenement.idEvent}" >
+                    	<h2>Evenement : ${p.evenement.titre}</h3>
+                    </a>
                     <h3>Groupe Sang : ${p.groupeSang}</h3>
                     <p>Quantite :  ${p.qte}</p>
                 </div>

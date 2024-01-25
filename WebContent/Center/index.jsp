@@ -14,7 +14,7 @@
 
 <body>
 
-	<jsp:include page="navbar.jsp" />
+    <jsp:include page="../ressources/navbar.jsp" />
 
 
     <div class="container">

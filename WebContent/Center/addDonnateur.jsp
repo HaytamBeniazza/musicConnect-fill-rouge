@@ -9,7 +9,8 @@
 </head>
 <body>
 
-    <%@ include file="navbar.jsp" %>
+    <jsp:include page="../ressources/navbar.jsp" />
+
 
     <div class="form-container">
         <h2>Add Donnateur</h2>
