@@ -76,7 +76,8 @@ public class EvenementController extends HttpServlet {
 		
 		}else if(path.equals("/Users/singlDetailPage.ev")) {
 			int eventId = Integer.parseInt(request.getParameter("id")); 
-			Institution center = institutionDAO.getInstitutionByEventId(eventId)  ;
+			System.out.print(eventId);
+			Institution center = institutionDAO.getInstitutionByEventId(eventId);
 			List<Evenement> events = evenementDAO.getEventsByCenter(center.getId()) ; 
 			request.setAttribute("events", events) ;
 			request.setAttribute("center", center) ;

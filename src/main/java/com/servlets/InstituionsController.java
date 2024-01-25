@@ -55,6 +55,9 @@ public class InstituionsController extends HttpServlet {
             case "/demande.in" :
                 demande(request,response);
                 break;
+            case "/reponse.in" :
+                response(request,response);
+                break;
             case "/logout.in":
                 logout(request, response);
                 break;
@@ -239,6 +242,25 @@ public class InstituionsController extends HttpServlet {
     
     
     public void home(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Object espaceObj = session.getAttribute("institution1");
+        
+        String espace = espaceObj.toString();
+        
+        if(espace == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
+        }else if(espace.equals("center")) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Center/dashboard.jsp");
+            dispatcher.forward(request, response);
+        }else if(espace.equals("hopital")) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Hospital/acceuil.jsp");
+            dispatcher.forward(request, response);
+        }
+        
+    }
+    
+    public void response(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Object espaceObj = session.getAttribute("institution1");
         

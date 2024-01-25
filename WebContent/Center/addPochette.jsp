@@ -4,35 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Pochette</title>
-    <link rel="stylesheet" href="css/add.css">
-    <link rel="stylesheet" href="css/navbar.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-100">
 
     <jsp:include page="../ressources/navbar.jsp" />
 
-    <div class="form-container">
-        <h2>Add Pochette</h2>
-        <form action="postPochette.pc" method="post">
+    <div class="container mx-auto mt-8 p-8 bg-white shadow-lg max-w-md">
+
+        <h2 class="text-3xl font-semibold mb-4">Add Pochette</h2>
+
+        <form action="postPochette.pc" method="post" class="space-y-4">
             <!-- Hidden input for the event ID -->
             <input type="hidden" name="eventId" value="${param.id}">
 
-            <label for="groupeSang">Groupe Sang:</label>
-            <input type="text" id="groupeSang" name="groupeSang" required>
+            <div>
+                <label for="groupeSang" class="block text-sm font-medium text-gray-600">Groupe Sang:</label>
+                <input type="text" id="groupeSang" name="groupeSang" required
+                       class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+            </div>
 
-            <label for="qte">Quantity:</label>
-            <input type="number" id="qte" name="qte" required>
+            <div>
+                <label for="qte" class="block text-sm font-medium text-gray-600">Quantity:</label>
+                <input type="number" id="qte" name="qte" required
+                       class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+            </div>
 
-            <label for="donnateur">Select Donnateur:</label>
-            <select id="donnateur" name="donnateurId">
-                <c:forEach var="donnateur" items="${donnateurs}">
-                    <option value="${donnateur.idDonnateur}">${donnateur.nom} ${donnateur.prenom}</option>
-                </c:forEach>
-            </select>
+            <div>
+                <label for="donnateur" class="block text-sm font-medium text-gray-600">Select Donnateur:</label>
+                <select id="donnateur" name="donnateurId"
+                        class="mt-1 p-2 border border-gray-300 rounded-md w-full">
+                    <c:forEach var="donnateur" items="${donnateurs}">
+                        <option value="${donnateur.idDonnateur}">${donnateur.nom} ${donnateur.prenom}</option>
+                    </c:forEach>
+                </select>
+            </div>
 
-            <input type="submit" value="Add Pochette">
-            <a class="link" href="addDonnateur.jsp" >Donnateur not found</a>
+            <button type="submit"
+                    class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
+                Add Pochette
+            </button>
+
+            <a href="addDonnateur.jsp"
+               class="block text-blue-500 hover:underline text-sm mt-2">Donnateur not found</a>
         </form>
+
     </div>
 
 </body>
