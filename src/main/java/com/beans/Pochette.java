@@ -5,7 +5,8 @@ public class Pochette {
     private int idPochette;
     private String groupeSang;
     private int qte;
-    private Institution centre ;
+    private Evenement evenement ;
+    private Donnateur donnateur ;
 
 
     public Pochette() {
@@ -41,11 +42,20 @@ public class Pochette {
         this.qte = qte;
     }
 
-	public Institution getCentre() {
-		return centre;
+
+	public Evenement getEvenement() {
+		return evenement;
 	}
 
-	public void setCentre(Institution centre) {
-		this.centre = centre;
+	public void setEvenement(Evenement evenement) {
+		this.evenement = evenement;
+	}
+
+	public Donnateur getDonnateur() {
+		return donnateur;
+	}
+
+	public void setDonnateur(Donnateur donnateur) {
+		this.donnateur = donnateur;
 	}
 }

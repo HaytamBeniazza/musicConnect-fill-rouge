@@ -106,8 +106,8 @@ public class InstituionsController extends HttpServlet {
 		institutionToLogin.setEmail(request.getParameter("email")); 
 		institutionToLogin.setPassword(request.getParameter("password"));
 
-		institutionToLogin.setEspace(request.getParameter("espace"));
-		Institution institution = metierInstitution.getByEmail(institutionToLogin.getEmail()) ; 		
+		Institution institution = metierInstitution.getByEmail(institutionToLogin.getEmail()) ; 
+		System.out.print(institution.getEmail());
 
 		if(institution.isValid(institutionToLogin.getEmail(), institutionToLogin.getPassword()) && institution.getEspace().equals("center")) {
 			HttpSession session = request.getSession() ; 

@@ -11,7 +11,7 @@
 </div>
 </div> -->
 
-
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
 <c:if test="${sessionScope.institution.espace == null }">
@@ -109,4 +109,7 @@
   </div>
 </div>
 </div>
+
+
+
 </c:if>
